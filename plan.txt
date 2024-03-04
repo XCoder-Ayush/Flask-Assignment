@@ -1,0 +1,25 @@
+Make URL as unique key
+GET Request By ID - Simple Fetch By Id - Returns JSON reponse
+
+POST /outline/1/2
+Text In Request Body
+{
+    "text" :"XXX"
+} 
+
+GET Parent By Id and insert it in the children segment by appending children.size() at the end 
+
+PUT /outline/1/2
+Text In Request Body
+{
+    "text" :"XXX"
+} 
+
+Get By Url. Update Text Content
+
+children is array of url's
+
+
+
+
+
