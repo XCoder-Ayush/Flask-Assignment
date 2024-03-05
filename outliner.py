@@ -49,6 +49,8 @@ def favicon():
 root_item = OutlineItem(url="/outline", text="Root")
 outlines.append(root_item)
 
+# /outline/0/3
+# Node->url,text,children
 
 @app.route('/<path:url>', methods=['GET'])
 def get_outline(url):
@@ -96,13 +98,28 @@ def update_text(url):
 @app.route('/<path:url>', methods=['DELETE'])
 def delete_outline_item(url):
     target_url = '/' + url
-    
+    # url=outline/0/0
+    parent_url=target_url[:-2]
+
+    # Del,Put OR Get
+    # /outline/0
+    # Parent 
+    isDeleted=False
     for item in outlines:
         if item.url == target_url:
             outlines.remove(item)
-            return '', 204
-    
-    return jsonify({"error": "Outline Not Found!!"}), 404
+            isDeleted=True
+
+    # Remove This Node From Children Array
+    if isDeleted==False:
+        return jsonify({"error": "Outline Not Found!!"}), 404
+
+    if isDeleted==True:
+        for item in outlines:
+            if item.url == parent_url:
+                item.remove_child(target_url)
+
+    return '', 204
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
